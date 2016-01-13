@@ -1,0 +1,32 @@
+build:
+  image: golang:1.5
+  environment:
+    - GO15VENDOREXPERIMENT=1
+    - GOOS=linux
+    - GOARCH=amd64
+    - CGO_ENABLED=0
+  commands:
+    - go get
+    - go build
+    - go test
+
+publish:
+  docker:
+    username: drone
+    password: $$DOCKER_PASS
+    email: $$DOCKER_EMAIL
+    repo: plugins/drone-ecr
+    when:
+      branch: master
+
+plugin:
+  name: ECR
+  desc: Build and Publish images to a AWS ECR.
+  type: publish
+  image: plugins/drone-ecr
+  labels:
+    - docker
+    - image
+    - container
+    - ecr
+    - aws
