@@ -1,6 +1,9 @@
 # drone-ecr
-Drone plugin for publishing Docker images to the EC2 Container Registry
 
+[![Build Status](http://beta.drone.io/api/badges/drone-plugins/drone-ecr/status.svg)](http://beta.drone.io/drone-plugins/drone-ecr)
+[![](https://badge.imagelayers.io/plugins/drone-ecr:latest.svg)](https://imagelayers.io/?images=plugins/drone-ecr:latest 'Get your own badge on imagelayers.io')
+
+Drone plugin for publishing Docker images to the EC2 Container Registry
 
 ## Docker
 
