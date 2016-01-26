@@ -19,7 +19,13 @@ import (
 	"github.com/drone/drone-go/plugin"
 )
 
+var (
+	buildDate string
+)
+
 func main() {
+	fmt.Printf("Drone AWS ECR Plugin built at %s\n", buildDate)
+
 	workspace := drone.Workspace{}
 	build := drone.Build{}
 	vargs := ECR{}
