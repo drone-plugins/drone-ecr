@@ -89,6 +89,9 @@ func main() {
 	username := authTokens[0]
 	password := authTokens[1]
 	registry := registryURL.Host
+
+	shortRepoName := vargs.Repo
+
 	// in case someone uses the shorthand repository name
 	// with a custom registry, we should concatinate so that
 	// we have the fully qualified image name.
@@ -217,6 +220,19 @@ func main() {
 	err = cmd.Run()
 	if err != nil {
 		os.Exit(1)
+	}
+
+	// Creates repository on AWS ECR
+	if vargs.CreateRepository {
+		ri := &ecr.CreateRepositoryInput{
+			RepositoryName: &shortRepoName,
+		}
+
+		_, err := svc.CreateRepository(ri)
+		if err != nil && !strings.HasPrefix(err.Error(), "RepositoryAlreadyExistsException") {
+			fmt.Printf("Error creating repository: %s", err.Error())
+			os.Exit(1)
+		}
 	}
 
 	// Creates image tags
