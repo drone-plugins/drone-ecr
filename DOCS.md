@@ -1,9 +1,9 @@
 Use the Docker plugin to build and push Docker images to an AWS Elastic Container Registry.
 The following parameters are used to configure this plugin:
 
-* `access_key` - authenticates with this username
-* `secret_key` - authenticates with this password
-* `region` - authenticates with this email
+* `access_key` - authenticates with this key
+* `secret_key` - authenticates with this secret
+* `region` - uses this region
 * `repo` - repository name for the image
 * `tag` - repository tag for the image
 * `force_tag` - replace existing matched image tags
