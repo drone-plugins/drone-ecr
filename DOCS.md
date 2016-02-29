@@ -17,6 +17,8 @@ The following parameters are used to configure this plugin:
 * `load` - restore image layers from the specified tar file
 * `build_args` - [build arguments](https://docs.docker.com/engine/reference/commandline/build/#set-build-time-variables-build-arg) to pass to `docker build`
 
+If no `access_key` and `secret_key` specified drone retrieves it from the environment variables `AWS_ACCESS_KEY` and `AWS_SECRET_KEY` or from IAM role if running on AWS.
+
 The following is a sample Docker configuration in your .drone.yml file:
 
 ```yaml
