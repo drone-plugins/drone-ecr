@@ -68,12 +68,12 @@ func main() {
 		os.Exit(1)
 	}
 
-	bytes, err := base64.StdEncoding.DecodeString(*resp.AuthorizationData[0].AuthorizationToken)
+	rawToken, err := base64.StdEncoding.DecodeString(*resp.AuthorizationData[0].AuthorizationToken)
 	if err != nil {
 		fmt.Printf("Error decoding authorization token: %s", err)
 		os.Exit(1)
 	}
-	token := string(bytes[:len(bytes)])
+	token := string(rawToken[:len(rawToken)])
 
 	authTokens := strings.Split(token, ":")
 	if len(authTokens) != 2 {
