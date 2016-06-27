@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/base64"
+	"bytes"
 	"fmt"
 	"io/ioutil"
 	"net/url"
@@ -120,7 +121,7 @@ func main() {
 	}
 
 	go func() {
-		args := []string{"-d"}
+		args := []string{"daemon", "-g", "/drone/docker"}
 
 		if len(vargs.Storage) != 0 {
 			args = append(args, "-s", vargs.Storage)
@@ -257,6 +258,29 @@ func main() {
 		cmd.Stderr = os.Stderr
 		trace(cmd)
 		err = cmd.Run()
+		if err != nil {
+			os.Exit(1)
+		}
+	}
+
+	// Remove untagged images, if any
+	var outbuf bytes.Buffer
+	cmd = exec.Command("docker", "images", "-q", "-f", "dangling=true")
+	cmd.Stdout = &outbuf
+	cmd.Stderr = os.Stderr
+	trace(cmd)
+	err = cmd.Run()
+	if err != nil {
+		os.Exit(1)
+	}
+
+	if outbuf.Len() > 0 {
+		images := strings.Split(strings.TrimSpace(outbuf.String()), "\n")
+		cmd = exec.Command("docker", append([]string{"rmi"}, images...)...)
+		cmd.Stdout = os.Stdout
+		cmd.Stderr = os.Stderr
+		trace(cmd)
+		err := cmd.Run()
 		if err != nil {
 			os.Exit(1)
 		}
