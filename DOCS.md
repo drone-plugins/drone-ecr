@@ -136,7 +136,7 @@ For detailed output you can set the `DOCKER_LAUNCH_DEBUG` environment variable i
 
 ```yaml
 publish:
-  docker:
+  ecr:
     environment:
       - DOCKER_LAUNCH_DEBUG=true
 ```
