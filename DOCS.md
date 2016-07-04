@@ -30,7 +30,7 @@ publish:
     file: Dockerfile
 ```
 
-You may want to dynamically tag your image. Use the `$$BRANCH`, `$$COMMIT` and `$$BUILD_NUMBER` variables to tag your image with the branch, commit sha or build number:
+You may want to dynamically tag your image. Use the `$$BRANCH`, `$$COMMIT`, `$$TAG` and `$$BUILD_NUMBER` variables to tag your image with the branch, commit sha, tag or build number:
 
 ```yaml
 publish:
