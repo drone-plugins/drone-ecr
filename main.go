@@ -30,6 +30,7 @@ func main() {
 	workspace := drone.Workspace{}
 	build := drone.Build{}
 	vargs := ECR{}
+	awsConfig := aws.Config{}
 
 	plugin.Param("workspace", &workspace)
 	plugin.Param("build", &build)
@@ -37,24 +38,18 @@ func main() {
 	plugin.MustParse()
 
 	//Perform ECR credential lookup and parse out username, password, registry
-	if vargs.AccessKey == "" {
-		fmt.Println("Please provide an access key id")
-		os.Exit(1)
-	}
-
-	if vargs.SecretKey == "" {
-		fmt.Println("Please provide a secret access key")
-		os.Exit(1)
+	if vargs.AccessKey != "" && vargs.SecretKey != "" {
+		awsConfig.Credentials = credentials.NewStaticCredentials(vargs.AccessKey, vargs.SecretKey, "")
 	}
 
 	if vargs.Region == "" {
 		fmt.Println("Please provide a region")
 		os.Exit(1)
 	}
-	svc := ecr.New(session.New(&aws.Config{
-		Region:      aws.String(vargs.Region),
-		Credentials: credentials.NewStaticCredentials(vargs.AccessKey, vargs.SecretKey, ""),
-	}))
+
+	awsConfig.Region = aws.String(vargs.Region)
+
+	svc := ecr.New(session.New(&awsConfig))
 
 	resp, err := svc.GetAuthorizationToken(&ecr.GetAuthorizationTokenInput{})
 	if err != nil {

@@ -1,8 +1,8 @@
 Use the Docker plugin to build and push Docker images to an AWS Elastic Container Registry.
 The following parameters are used to configure this plugin:
 
-* `access_key` - authenticates with this key
-* `secret_key` - authenticates with this secret
+* `access_key` - authenticates with this key (optional)
+* `secret_key` - authenticates with this secret (optional)
 * `region` - uses this region
 * `repo` - repository name for the image
 * `tag` - repository tag for the image
@@ -17,7 +17,20 @@ The following parameters are used to configure this plugin:
 * `load` - restore image layers from the specified tar file
 * `build_args` - [build arguments](https://docs.docker.com/engine/reference/commandline/build/#set-build-time-variables-build-arg) to pass to `docker build`
 
-The following is a sample Docker configuration in your .drone.yml file:
+If no `access_key` and `secret_key` specified drone retrieves it from the environment variables `AWS_ACCESS_KEY` and `AWS_SECRET_KEY` or from IAM role if running on AWS.
+
+The following is a sample Docker configuration in your .drone.yml file using an EC2 instance-role:
+
+```yaml
+publish:
+  ecr:
+    region: us-east-1
+    repo: foo/bar
+    tag: latest
+    file: Dockerfile
+```
+
+Optionally you may set the access_key and secret_key to access to AWS api:
 
 ```yaml
 publish:
