@@ -5,7 +5,11 @@ The following parameters are used to configure this plugin:
 * `secret_key` - authenticates with this secret
 * `region` - uses this region
 * `repo` - repository name for the image
-* `tag` - repository tag for the image
+* `tag` - repository tag(s) for the image - this can be a list
+* `file` - Dockerfile to be used, defaults to Dockerfile
+* `auth` - auth token for the registry
+* `context` - the context path to use, defaults to root of the git repo
+* `dns` - set custom dns server(s) for the container - this can be a list
 * `force_tag` - replace existing matched image tags
 * `create_repository` - automatically create repository in ECR
 * `mirror` - use a mirror registry instead of pulling images directly from the central Hub
