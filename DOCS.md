@@ -59,8 +59,8 @@ Simple publishing of a docker container:
 pipeline:
   docker:
     image: plugins/ecr
-	access_key: test
-	secret_key: test
+	access_key: N1DOBESIHFPDZBI2YBGA
+	secret_key: HdUp4yYnTjeDaYfH2NICMdHg0V5qHdpce1vxAySv
 	region: us-east-1
     create_repository: true
     repo: foo/bar
