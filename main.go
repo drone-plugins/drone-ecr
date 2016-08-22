@@ -105,15 +105,10 @@ func main() {
 			Usage:  "docker repository",
 			EnvVar: "PLUGIN_REPO",
 		},
-		cli.StringFlag{
-			Name:   "ecr.region",
-			Usage:  "aws ecr region",
-			EnvVar: "ECR_REGION,PLUGIN_REGION",
-		},
 		cli.BoolFlag{
 			Name:   "ecr.create-repository",
 			Usage:  "create aws ecr repository if does not exists",
-			EnvVar: "ECR_CREATE_REPOSITORY, PLUGIN_CREATE_REPOSITORY",
+			EnvVar: "ECR_CREATE_REPOSITORY,PLUGIN_CREATE_REPOSITORY",
 		},
 
 		// secret variables
@@ -126,6 +121,11 @@ func main() {
 			Name:   "ecr.secret-key",
 			Usage:  "aws ecr secret key",
 			EnvVar: "ECR_SECRET_KEY,PLUGIN_SECRET_KEY",
+		},
+		cli.StringFlag{
+			Name:   "ecr.region",
+			Usage:  "aws ecr region",
+			EnvVar: "ECR_REGION,PLUGIN_REGION",
 		},
 	}
 
