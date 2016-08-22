@@ -1,9 +1,4 @@
-# Docker image for the ecr plugin
-#
-#     docker build --rm=true -t plugins/drone-ecr .
+FROM docker:1.11-dind
 
-FROM rancher/docker:v1.10.2
-
-ADD drone-ecr /go/bin/
-VOLUME /var/lib/docker
-ENTRYPOINT ["/usr/bin/dockerlaunch", "/go/bin/drone-ecr"]
+ADD drone-ecr /bin/
+ENTRYPOINT ["/usr/local/bin/dockerd-entrypoint.sh", "/bin/drone-ecr"]
