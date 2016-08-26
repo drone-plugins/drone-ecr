@@ -1,9 +1,16 @@
 # Docker image for the ecr plugin
 #
-#     docker build --rm=true -t plugins/drone-ecr .
+#     docker build --rm=true -t plugins/ecr .
 
-FROM rancher/docker:v1.10.2
+FROM plugins/docker:latest
 
-ADD drone-ecr /go/bin/
-VOLUME /var/lib/docker
-ENTRYPOINT ["/usr/bin/dockerlaunch", "/go/bin/drone-ecr"]
+RUN \
+	mkdir -p /aws && \
+	apk -Uuv add groff less python py-pip && \
+	pip install awscli && \
+	apk --purge -v del py-pip && \
+	rm /var/cache/apk/*
+
+ADD bin/wrap-drone-docker.sh /bin/wrap-drone-docker.sh
+
+ENTRYPOINT /bin/wrap-drone-docker.sh
