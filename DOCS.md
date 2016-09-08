@@ -2,14 +2,13 @@ Use the ECR plugin to build and push Docker images to an AWS Elastic Container R
 
 ## Config
 This plugin is built on top of the [docker plugin](https://github.com/drone-plugins/drone-docker)
-so you can use parameters from [docker plugin docs][docker_plugin_docs]
+so you can use parameters from [docker plugin docs](https://github.com/drone-plugins/drone-docker/blob/HEAD/DOCS.md)
 
 The following parameters are used to configure this plugin:
 
 * **access_key** - authenticates with this key
 * **secret_key** - authenticates with this secret
 * **region** - uses this region
-* **create_repository** - create aws ecr repot if provided repo does not exist (default false)
 
 The following secret values can be set to configure the plugin.
 
@@ -46,11 +45,11 @@ publish:
     access_key: MyAWSAccessKey
     secret_key: MyAWSSecretKey
     region: us-east-1
-    repo: foo/bar
+    repo: <account_id>.dkr.ecr.us-east-1.amazonaws.com/bar
     tag: latest
     file: Dockerfile
 ```
 
-For more examples look at the [docker plugin docs][docker_plugin_docs]
+> **Note**: You should create the repository before trying to push your image. The repo needs to be the fully qualified name of the ecr repository.
 
-[docker_plugin_docs]: https://github.com/drone-plugins/drone-docker/blob/HEAD/DOCS.md
+For more examples look at the [docker plugin docs](https://github.com/drone-plugins/drone-docker/blob/HEAD/DOCS.md)

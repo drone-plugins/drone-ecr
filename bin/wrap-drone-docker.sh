@@ -22,13 +22,5 @@ export DOCKER_USERNAME=AWS
 export DOCKER_PASSWORD=$(echo $aws_auth | cut -d ' ' -f2 | base64 -d | cut -d: -f2)
 export DOCKER_REGISTRY=$(echo $aws_auth | cut -d ' ' -f4)
 
-# create repo
-if [ "$PLUGIN_CREATE_REPOSITORY" = true ]; then
-  aws ecr create-repository --repository-name $PLUGIN_REPO
-fi
-
-# fully qualify the repo name
-PLUGIN_REPO="${DOCKER_REGISTRY#https://}/$PLUGIN_REPO"
-
 # invoke the docker plugin
 /bin/drone-docker "$@"
