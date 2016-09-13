@@ -14,44 +14,21 @@ Build the container using `make`:
 make deps docker
 ```
 
-### Example
+## Usage
 
-```sh
-ecr run -i --privileged -v $(pwd):/drone/src plugins/drone-ecr <<EOF
-{
-    "repo": {
-        "clone_url": "git://github.com/drone/drone",
-        "owner": "drone",
-        "name": "drone",
-        "full_name": "drone/drone"
-    },
-    "system": {
-        "link_url": "https://beta.drone.io"
-    },
-    "build": {
-        "number": 22,
-        "status": "success",
-        "started_at": 1421029603,
-        "finished_at": 1421029813,
-        "message": "Update the Readme",
-        "author": "johnsmith",
-        "author_email": "john.smith@gmail.com",
-        "event": "push",
-        "branch": "master",
-        "commit": "436b7a6e2abaddfd35740527353e78a227ddcb2c",
-        "ref": "refs/heads/master"
-    },
-    "workspace": {
-        "root": "/drone/src",
-        "path": "/drone/src/github.com/drone/drone"
-    },
-    "vargs": {
-        "access_key": "970d28f4dd477bc184fbd10b376de753",
-        "secret_key": "9c5785d3ece6a9cdefa42eb99b58986f9095ff1c",
-        "region": "us-east-1",
-        "repo": "foo/bar",
-        "storage_driver": "aufs"
-    }
-}
-EOF
+Execute from the working directory:
+
+```
+docker run --rm \
+  -e PLUGIN_TAG=latest \
+  -e PLUGIN_REPO=octocat/hello-world \
+  -e ECR_ACCESS_KEY=N1DOBESIHFPDZBI2YBGA \
+  -e ECR_SECRET_KEY=HdUp4yYnTjeDaYfH2NICMdHg0V5qHdpce1vxAySv \
+  -e ECR_REGION=us-east-1 \
+  -e ECR_CREATE_REPOSITORY=true \
+  -e DRONE_COMMIT_SHA=d8dbe4d94f15fe89232e0402c6e8a0ddf21af3ab \
+  -v $(pwd):$(pwd) \
+  -w $(pwd) \
+  --privileged \
+  plugins/ecr --dry-run
 ```
