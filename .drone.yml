@@ -1,6 +1,6 @@
 pipeline:
-  latest:
-    image: docker
+  publish:
+    image: plugins/docker
     repo: plugins/ecr
     tags: [ "latest", "1.0", "1" ]
     when:
@@ -11,7 +11,7 @@ plugin:
   name: ECR
   desc: Build and publish images to a AWS ECR
   type: publish
-  image: plugins/drone-ecr
+  image: plugins/ecr
   labels:
     - docker
     - image
