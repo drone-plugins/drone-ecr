@@ -18,8 +18,10 @@ fi
 # support --registry-ids if provided
 [ -n "$PLUGIN_REGISTRY_IDS" ] && export REGISTRY_IDS="--registry-ids ${PLUGIN_REGISTRY_IDS}"
 
-# just log in
-eval $(aws ecr get-login ${REGISTRY_IDS:-''})
+aws_auth=$(aws ecr get-authorization-token --output text ${REGISTRY_IDS:-''})
+export PLUGIN_REGISTRY="$(echo $aws_auth | cut -d ' ' -f4)"
+export PLUGIN_USERNAME="AWS"
+export PLUGIN_PASSWORD="$(echo $aws_auth | cut -d ' ' -f2 | base64 -d | cut -d: -f2)"
 
 # invoke the docker plugin
 /bin/drone-docker "$@"
