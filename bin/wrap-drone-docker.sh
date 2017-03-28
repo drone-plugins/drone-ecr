@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -ex
 
 # support PLUGIN_ and ECR_ variables
 [ -n "$ECR_REGION" ] && export PLUGIN_REGION=${ECR_REGION}
@@ -18,13 +18,10 @@ fi
 # support --registry-ids if provided
 [ -n "$PLUGIN_REGISTRY_IDS" ] && export REGISTRY_IDS="--registry-ids ${PLUGIN_REGISTRY_IDS}"
 
-# get token from aws
 aws_auth=$(aws ecr get-authorization-token --output text ${REGISTRY_IDS:-''})
-
-# map some ecr specific variable names to their docker equivalents
-export DOCKER_USERNAME=AWS
-export DOCKER_PASSWORD=$(echo $aws_auth | cut -d ' ' -f2 | base64 -d | cut -d: -f2)
-export DOCKER_REGISTRY=$(echo $aws_auth | cut -d ' ' -f4)
+export PLUGIN_REGISTRY="$(echo $aws_auth | cut -d ' ' -f4)"
+export PLUGIN_USERNAME="AWS"
+export PLUGIN_PASSWORD="$(echo $aws_auth | cut -d ' ' -f2 | base64 -d | cut -d: -f2)"
 
 # invoke the docker plugin
 /bin/drone-docker "$@"
