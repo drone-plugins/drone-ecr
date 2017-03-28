@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -ex
 
 # support PLUGIN_ and ECR_ variables
 [ -n "$ECR_REGION" ] && export PLUGIN_REGION=${ECR_REGION}
