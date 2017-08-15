@@ -6,7 +6,7 @@ Drone plugin to build and publish Docker images to AWS EC2 Container Registry. F
 
 ## Docker
 
-Build the docker image with the following commands:
+Build the Docker image with the following commands:
 
 ```
 docker build --rm=true -t plugins/ecr .
