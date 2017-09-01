@@ -19,14 +19,14 @@ if [ -n "$PLUGIN_SESSION_TOKEN" ]; then
   export AWS_ACCESS_SESSION_TOKEN=${PLUGIN_SESSION_TOKEN}
 fi
 
-# Support external AWS_ variables
-# Sample file token
+# Support external AWS_ variables and source it.
+# Sample file of PLUGIN_TOKEN_FILE
 # export AWS_ACCESS_KEY_ID=XXX
 # export AWS_SECRET_ACCESS_KEY=XXX
 # export AWS_SESSION_TOKEN=xxx
-
-if [ -f ./token ];then
-  . ./token
+if [ "$PLUGIN_EXTERNAL" == "true" ] && [ -n "PLUGIN_TOKEN_FILE" ]; then
+  cat ${PLUGIN_TOKEN_FILE}
+  . ${PLUGIN_TOKEN_FILE}
 fi
 
 # get token from aws
