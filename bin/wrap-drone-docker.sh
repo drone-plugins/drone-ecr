@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -ex
+
 # support PLUGIN_ and ECR_ variables
 [ -n "$ECR_REGION" ] && export PLUGIN_REGION=${ECR_REGION}
 [ -n "$ECR_ACCESS_KEY" ] && export PLUGIN_ACCESS_KEY=${ECR_ACCESS_KEY}
@@ -25,7 +27,6 @@ fi
 # export AWS_SECRET_ACCESS_KEY=XXX
 # export AWS_SESSION_TOKEN=xxx
 if [ "$PLUGIN_EXTERNAL" == "true" ] && [ -n "PLUGIN_TOKEN_FILE" ]; then
-  cat ${PLUGIN_TOKEN_FILE}
   . ${PLUGIN_TOKEN_FILE}
 fi
 
