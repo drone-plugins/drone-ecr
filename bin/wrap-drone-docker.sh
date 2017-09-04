@@ -30,13 +30,8 @@ if [ "$PLUGIN_EXTERNAL" == "true" ] && [ -n "PLUGIN_TOKEN_FILE" ]; then
   . ${PLUGIN_TOKEN_FILE}
 fi
 
-# get token from aws
-aws_auth=$(aws ecr get-authorization-token --output text)
-
-# map some ecr specific variable names to their docker equivalents
-export DOCKER_USERNAME=AWS
-export DOCKER_PASSWORD=$(echo $aws_auth | cut -d ' ' -f2 | base64 -d | cut -d: -f2)
-export DOCKER_REGISTRY=$(echo $aws_auth | cut -d ' ' -f4)
+# Authenticate your Docker client to ECR registry
+aws ecr get-login --no-include-email --region ap-southeast-2|sh
 
 # invoke the docker plugin
 /bin/drone-docker "$@"
